@@ -9,6 +9,8 @@ const BwtPage = () => {
     const [tableSorted, setTableSorted] = useState([]);
     const [resultArray, setResultArray] = useState([]);
     const [showInfo, setShowInfo] = useState(false);
+    const [nBefore, setNBefore] = useState();
+    const [nAfter, setNAfter] = useState();
 
     function handleInputChange(event){
         setInputString(event.target.value);
@@ -19,6 +21,10 @@ const BwtPage = () => {
     }
 
     function bwtTransformation(input){
+
+        if(input.slice(-1)!="$"){
+            input = input + "$" ;
+        }
         const n = input.length;
         const table = [];
 
@@ -44,6 +50,9 @@ const BwtPage = () => {
         setBwt(result);
 
         setResultArray(result.split(""));
+
+        setNBefore(input.length);
+        setNAfter(result.length);
     }
 
   return (
@@ -76,25 +85,33 @@ const BwtPage = () => {
                             position in the string, creating a new 
                             string by slicing the original string at
                              that position and concatenating the two parts.</li>
-                        <li>For <span className='bwt-info'>{inputString}</span>, we get the permutations: <span className='bwt-info'>{`[${tableUnsorted.toString()}]`}</span></li>
+                        <li>For <span className='bwt-info'>{inputString + "$"}</span>, we get the permutations: <span className='bwt-info'>{`[${tableUnsorted.toString()}]`}</span></li>
                     </ul>
                 </li>
                 <li>
                     <h4>Sort permutations lexicographically:</h4>
                     <ul>
                         <li>We sort these permutations in lexicographic (alphabetical) order.</li>
-                        <li>After sorting the permutations, we get: {`[${tableSorted.toString()}]`}</li>
+                        <li>After sorting the permutations, we get: <span className='bwt-info'>{`[${tableSorted.toString()}]`}</span></li>
                     </ul>
                 </li>
                 <li>
                     <h4>Extract the last column:</h4>
                     <ul>
                         <li>We create a new string by taking the last character from each permutation in the sorted table.</li>
-                        <li>For the sorted permutations, the last column characters are: {`[${resultArray}]`}</li>
-                        <li>Concatenating these characters, we get the BWT: {bwt}</li>
+                        <li>For the sorted permutations, the last column characters are: <span className='bwt-info'>{`[${resultArray}]`}</span></li>
+                        <li>Concatenating these characters, we get the BWT: <span className='bwt-info'>{bwt}</span></li>
                     </ul>
                 </li>
            </ol>
+           <h3 id='ep-h3'>Evaluate Performance:</h3>
+           <ul>
+            <li>Number of Characters Before BWT: <span className='bwt-info'>{nBefore}</span></li>
+            <li>Number of Characters After BWT: <span className='bwt-info'>{nAfter}</span></li>
+           </ul>
+           <p> The BWT does not change the length of the String. 
+            It helps in transforming the data to make it more amenable
+             to other compression techniques.</p>
            </p>
       )}
     </div>
